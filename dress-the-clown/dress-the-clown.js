@@ -4,37 +4,76 @@
 
 console.log('Dress The Clown!')
 
+//declare variables
+let clothingIndex = 0
 let headIndex = 0
+//reference clown parts
+let head = document.getElementById('head')
+let body = document.getElementById('body')
+let shoes = document.getElementById('shoes')
+let text = document.getElementById('textDisplay')
 
-//Change head
-function changeClownHead() {
-  let head = document.getElementById('head')
-  let headSrc = './images/head' + headIndex + '.png'
-  head.src = headSrc
+function changeClothes() {
+  //selects what part to change
+  if (clothingIndex == 0) {
+    clothingOption = head
+    clothingSlot = 'head'
+  } else if (clothingIndex == 1) {
+    clothingOption = body
+    clothingSlot = 'body'
+  } else if (clothingIndex == 2) {
+    clothingOption = shoes
+    clothingSlot = 'shoes'
+  }
+  //changes image
+  let clothesSrc = './images/' + clothingSlot + headIndex + '.png'
+  clothingOption.src = clothesSrc
 }
 
-changeClownHead()
-
+//arrow key controls
 document.onkeydown = checkKey
 
 function checkKey(e) {
   e = e || window.event
 
   if (e.code == 'ArrowUp') {
-    // up arrow
+    if (clothingIndex == 0) {
+      clothingIndex = 3
+    }
+    clothingIndex--
+    //lets user know what id being changed
+    if (clothingIndex == 0) {
+      text.innerHTML = 'Head'
+    } else if (clothingIndex == 1) {
+      text.innerHTML = 'Body'
+    } else if (clothingIndex == 2) {
+      text.innerHTML = 'Shoes'
+    }
   } else if (e.code == 'ArrowDown') {
-    // down arrow
+    clothingIndex++
+    if (clothingIndex == 3) {
+      clothingIndex = 0
+    }
+    //lets user know what id being changed
+    if (clothingIndex == 0) {
+      text.innerHTML = 'Head'
+    } else if (clothingIndex == 1) {
+      text.innerHTML = 'Body'
+    } else if (clothingIndex == 2) {
+      text.innerHTML = 'Shoes'
+    }
   } else if (e.code == 'ArrowLeft') {
     if (headIndex == 0) {
-      headIndex = 5
+      headIndex = 6
     }
     headIndex--
-    changeClownHead()
+    changeClothes()
   } else if (e.code == 'ArrowRight') {
     headIndex++
-    changeClownHead()
-    if (headIndex == 5) {
+    if (headIndex == 6) {
       headIndex = 0
     }
+
+    changeClothes()
   }
 }
